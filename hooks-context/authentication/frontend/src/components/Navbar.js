@@ -1,0 +1,16 @@
+import React from 'react';
+import AuthForm from "./AuthForm";
+
+export default () => {
+
+    return (
+        <div className="row">
+            <div className="col-12">
+                <nav className="navbar navbar-light bg-light">
+                    <h2 className="navbar-brand">Neto Social</h2>
+                    <AuthForm />
+                </nav>
+            </div>
+        </div>
+    )
+}
