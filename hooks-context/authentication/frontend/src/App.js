@@ -2,19 +2,25 @@ import React from 'react';
 import './App.css';
 
 import Navbar from "./components/Navbar";
+import {useAuth} from "./hooks/auth.hook";
+import {News} from "./components/News";
+import IndexContent from "./components/IndexContent";
+import Loader from "./components/Loader";
 
 function App() {
-  return (
-      <div className="container">
-          <Navbar />
-          <div className="row justify-content-md-center mt-3">
-              <div className="jumbotron col-md-6">
-                  <h1 className="display-4">Neto Social</h1>
-                  <p className="lead">Facebook and VK killer</p>
-              </div>
-          </div>
-      </div>
-  );
+    const {token, ready} = useAuth();
+    const isAuthenticated = !!token;
+    //if(ready || !ready) {console.log('ready', ready); }
+    if(!ready) {return <Loader/>}
+
+    return (
+        <div className="container">
+            <Navbar isAuthenticated={isAuthenticated} />
+
+            {!isAuthenticated && <IndexContent />}
+            {isAuthenticated && <News />}
+        </div>
+    );
 }
 
 export default App;

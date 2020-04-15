@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import {useHttp} from "../hooks/http.hook";
 import {useAuth} from "../hooks/auth.hook";
 
@@ -19,10 +19,9 @@ export default () => {
         e.preventDefault();
         try {
             const data = await request(`${process.env.REACT_APP_BASE_URL}/auth`, 'POST', {...form});
-            console.log(data)
-            login(data.token, data.userId)
-            //{"token":"ac622057-a93e-4417-b635-068ee691a4ba"}
+            login(data.token)
         } catch (e) {}
+        window.location.href = `http://localhost:3000`;
     };
 
     return (
