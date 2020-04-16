@@ -1,11 +1,8 @@
 import React, {useState, useEffect} from 'react';
+import ListItem from "./ListItem";
 
-export default function List({setInfo}) {
+export default function List() {
     const [listItems, setListItems] = useState([]);
-
-    function handleClick(id, name) {
-        setInfo({id, name});
-    }
 
     useEffect(() => {
 
@@ -36,12 +33,8 @@ export default function List({setInfo}) {
 
     return (
         <div className="list-group">
-            {listItems.map((item) =>
-                <button type="button"
-                        className="list-group-item list-group-item-action"
-                        key={item.id}
-                        onClick={() => handleClick(item.id, item.name)}
-                >{item.name}</button>)}
+            {listItems.map(({id, name}) =>
+                <ListItem name={name} id={id} key={id} /> )}
         </div>
     )
 }

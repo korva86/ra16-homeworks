@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import Card from "./Card";
+import React, {useContext, useEffect, useState} from 'react';
+import Context from "../Context";
 
-export default function Details({info}) {
+export default function Details() {
+    const {info} = useContext(Context);
     const [person, setPerson] = useState({});
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -43,7 +44,17 @@ export default function Details({info}) {
 
     if (Object.keys(person).length) {
         return (
-            <Card person={person} />
+            <div className="card">
+                <img src={person.avatar} className="card-img-top" alt={person.name} />
+                <div className="card-body">
+                    <h5 className="card-title">{person.name}</h5>
+                </div>
+                <ul className="list-group list-group-flush">
+                    <li className="list-group-item">City: {person.details.city}</li>
+                    <li className="list-group-item">Company: {person.details.company}</li>
+                    <li className="list-group-item">Position: {person.details.position}</li>
+                </ul>
+            </div>
         )
     }
 
