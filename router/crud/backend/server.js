@@ -10,16 +10,17 @@ app.use(cors());
 app.use(koaBody({json: true}));
 
 let posts = [];
-let nextId = 1;
+let nextId = posts.length + 1;
 
 const router = new Router();
 
 router.get('/posts', async (ctx, next) => {
     ctx.response.body = posts;
+    console.log(posts);
 });
 
 router.post('/posts', async(ctx, next) => {
-    const {id, content} = ctx.request.body;
+    const {id, content} = JSON.parse(ctx.request.body);
 
     if (id !== 0) {
         posts = posts.map(o => o.id !== id ? o : {...o, content: content});
@@ -27,7 +28,7 @@ router.post('/posts', async(ctx, next) => {
         return;
     }
 
-    posts.push({...ctx.request.body, id: nextId++, created: Date.now()});
+    posts.push({...JSON.parse(ctx.request.body), id: nextId++, created: Date.now()});
     ctx.response.status = 204;
 });
 
