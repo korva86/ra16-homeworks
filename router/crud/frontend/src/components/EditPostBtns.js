@@ -35,7 +35,10 @@ const EditPostBtns = ({post}) => {
             body: JSON.stringify({
                 id: post.id,
                 content: currentPost
-            })
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
             .then(() => {
                 setCurrentPost('');

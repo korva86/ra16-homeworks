@@ -14,7 +14,10 @@ const PostNew = () => {
                 body: JSON.stringify({
                     id: 0,
                     content: textPost
-                })
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
                 .then(() => {
                     getPost();
