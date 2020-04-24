@@ -1,15 +1,14 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, useContext} from 'react';
 import {useHttp} from "../hooks/http.hook";
-import {useAuth} from "../hooks/auth.hook";
+import {AuthContext} from "../context/AuthContext";
 
 export default () => {
-    const {logout, token} = useAuth();
-    const {request} = useHttp();
+    const {logout, token} = useContext(AuthContext);
+    const [{request}] = useHttp();
     const [profile, setProfile] = useState(null);
 
     const logoutHandler = () => {
         logout();
-        window.location.href = `http://localhost:3000`;
     };
 
     const getProfile = useCallback(async () => {
@@ -25,7 +24,7 @@ export default () => {
     useEffect(() => {
         getProfile()
     }, [getProfile]);
-    console.log(profile);
+
     if (profile) {
         return (
             <div className="form-inline">

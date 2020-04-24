@@ -1,12 +1,12 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, useContext} from 'react';
 import {useHttp} from '../hooks/http.hook';
 import Loader from '../components/Loader';
 import Card from '../components/Card';
-import {useAuth} from "../hooks/auth.hook";
+import {AuthContext} from "../context/AuthContext";
 
 export const News = () => {
-    const {token, logout} = useAuth();
-    const {request, loading} = useHttp();
+    const {token, logout} = useContext(AuthContext);
+    const [{request, loading}] = useHttp();
     const [news, setNews] = useState(null);
 
     const getNews = useCallback(async () => {

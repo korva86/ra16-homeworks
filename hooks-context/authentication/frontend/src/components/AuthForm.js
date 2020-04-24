@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {useHttp} from "../hooks/http.hook";
-import {useAuth} from "../hooks/auth.hook";
+import {AuthContext} from "../context/AuthContext";
+import AlertContext from "../context/alert/AlertContext";
 
 export default () => {
-    const {login} = useAuth();
+    const {login} = useContext(AuthContext);
+    const alert = useContext(AlertContext);
 
-    const {request} = useHttp();
+    const [{request}] = useHttp();
 
     const [form, setForm] = useState({
         login: '', password: ''
@@ -20,8 +22,9 @@ export default () => {
         try {
             const data = await request(`${process.env.REACT_APP_BASE_URL}/auth`, 'POST', {...form});
             login(data.token)
-        } catch (e) {}
-        window.location.href = `http://localhost:3000`;
+        } catch (e) {
+            alert.show(e.message);
+        }
     };
 
     return (

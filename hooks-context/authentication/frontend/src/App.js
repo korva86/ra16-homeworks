@@ -5,21 +5,25 @@ import Navbar from "./components/Navbar";
 import {useAuth} from "./hooks/auth.hook";
 import {News} from "./components/News";
 import IndexContent from "./components/IndexContent";
-import Loader from "./components/Loader";
+import {AuthContext} from "./context/AuthContext";
+import {AlertState} from "./context/alert/AlertState";
+import Alert from "./components/Alert";
 
 function App() {
-    const {token, ready} = useAuth();
+    const [{login, logout, token, ready}] = useAuth();
     const isAuthenticated = !!token;
-    //if(ready || !ready) {console.log('ready', ready); }
-    if(!ready) {return <Loader/>}
 
     return (
-        <div className="container">
-            <Navbar isAuthenticated={isAuthenticated} />
-
-            {!isAuthenticated && <IndexContent />}
-            {isAuthenticated && <News />}
-        </div>
+        <AuthContext.Provider value={{login, logout, token, ready, isAuthenticated}}>
+            <AlertState>
+                <div className="container">
+                    <Navbar isAuthenticated={isAuthenticated} />
+                    <Alert />
+                    {!isAuthenticated && <IndexContent />}
+                    {isAuthenticated && <News />}
+                </div>
+            </AlertState>
+        </AuthContext.Provider>
     );
 }
 

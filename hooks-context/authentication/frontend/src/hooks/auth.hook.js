@@ -7,11 +7,13 @@ export const useAuth = () => {
     const [ready, setReady] = useState(false);
 
     const login = useCallback((jwtToken) => {
+        setReady(false)
         setToken(jwtToken);
 
         localStorage.setItem(storageName, JSON.stringify({
             token: jwtToken
-        }))
+        }));
+        setReady(true)
     }, []);
 
 
@@ -26,9 +28,7 @@ export const useAuth = () => {
             login(data.token);
         }
         setReady(true)
-
     }, [login]);
 
-    //console.log(ready, token)
-    return { login, logout, token, ready }
+    return [{login, logout, token, ready}]
 };
