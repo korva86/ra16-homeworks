@@ -53,6 +53,17 @@ router.post('/api/services', async (ctx, next) => {
     const status = 204;
     return fortune(ctx, null, status);
 });
+router.post('/api/services/:id', async (ctx, next) => {
+    const id = Number(ctx.params.id);
+    const index = services.findIndex(o => o.id === id);
+    if (index === -1) {
+        const status = 404;
+        return fortune(ctx, null, status);
+    }
+    services[index] = {...services[index], ...ctx.request.body}
+    const status = 204;
+    return fortune(ctx, null, status);
+});
 router.delete('/api/services/:id', async (ctx, next) => {
     const id = Number(ctx.params.id);
     const index = services.findIndex(o => o.id === id);
