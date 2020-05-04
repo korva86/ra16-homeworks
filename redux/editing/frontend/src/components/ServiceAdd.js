@@ -21,11 +21,11 @@ function ServiceAdd() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input name='name' onChange={handleChange} value={item.name} />
-            <input name='price' onChange={handleChange} value={item.price} />
-            <button type='submit'>Save</button>
-            {item.editId && <button type='button' onClick={handleCancelEdit}>Cancel</button>}
+        <form onSubmit={handleSubmit} className="form-inline mt-3 mb-3">
+            <input name='name' onChange={handleChange} value={item.name} className="form-control mr-2"/>
+            <input name='price' onChange={handleChange} value={item.price} className="form-control mr-2 mt-2 mt-sm-0" />
+            <button type='submit' className="btn btn-primary mr-2 mt-2 mt-sm-0" >Save</button>
+            {item.editId && <button type='button' onClick={handleCancelEdit} className="btn btn-secondary mt-2 mt-sm-0">Cancel</button>}
         </form>
     )
 }

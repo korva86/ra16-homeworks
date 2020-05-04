@@ -8,8 +8,10 @@ import ServiceList from "./components/ServiceList";
 function App() {
   return (
       <Provider store={store}>
-        <ServiceAdd />
-        <ServiceList />
+          <div className="container">
+              <ServiceAdd />
+              <ServiceList />
+          </div>
       </Provider>
 
   );

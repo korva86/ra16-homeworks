@@ -6,8 +6,6 @@ import {
     clearServiceField,
     removeService
 } from '../actions/actionCreators';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 function ServiceList() {
     const items = useSelector(state => state.serviceList);
@@ -29,14 +27,18 @@ function ServiceList() {
     };
 
     return (
-        <ul>
-            {items.map(o =>
-                <li key={o.id}>
-                    {o.name} {o.price}
-                    <button onClick={() => handleEdit(o)}><FontAwesomeIcon icon={faPencilAlt} /></button>
-                    <button onClick={() => handleRemove(o.id)}>&times;</button>
-                </li>)}
-        </ul>
+        <div className="col-lg-6 pl-0">
+            <ul className="list-group">
+                {items.map(o =>
+                    <li key={o.id} className="list-group-item d-flex align-items-center justify-content-between">
+                        {o.name} - {o.price}
+                        <span className="text-nowrap">
+                            <button onClick={() => handleEdit(o)} className="btn btn-danger ml-2 mr-2">✎</button>
+                            <button onClick={() => handleRemove(o.id)} className="btn btn-danger" >&times;</button>
+                        </span>
+                    </li>)}
+            </ul>
+        </div>
     )
 }
 
