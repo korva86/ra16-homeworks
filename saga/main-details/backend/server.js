@@ -21,7 +21,7 @@ const router = new Router();
 function fortune(ctx, body = null, status = 200) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            if (Math.random() > 0.25) {
+            if (Math.random() > 0.5) {
                 ctx.response.status = status;
                 ctx.response.body = body;
                 resolve();
