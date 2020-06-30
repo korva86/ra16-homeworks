@@ -1,4 +1,4 @@
-import { takeLatest, put, spawn, debounce, retry } from 'redux-saga/effects'
+import { takeLatest, put, spawn, debounce, retry, cancelled } from 'redux-saga/effects'
 import {CHANGE_SEARCH_FIELD, SEARCH_SKILLS_REQUEST} from "../actions/actionTypes";
 import {searchSkillsFailure, searchSkillsRequest, searchSkillsSuccess} from "../actions/actionCreators";
 import {searchSkills} from "../api";
@@ -16,13 +16,18 @@ function* watchChangeSearchSaga() {
 }
 
 function* handleSearchSkillsSaga(action) {
+    const abortController = new AbortController();
     try {
         const retryCount = 3;
         const retryDelay = 1000;
-        const data = yield retry(retryCount, retryDelay, searchSkills, action.payload.search);
+        const data = yield retry(retryCount, retryDelay, searchSkills, abortController.signal, action.payload.search);
         yield put(searchSkillsSuccess(data))
     } catch (e) {
         yield put(searchSkillsFailure(e.message))
+    } finally {
+        if (yield(cancelled())) {
+            abortController.abort();
+        }
     }
 }
 
