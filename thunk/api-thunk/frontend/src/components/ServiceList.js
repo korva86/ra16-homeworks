@@ -23,7 +23,6 @@ function ServiceList() {
 
 
     const handleEdit = (item) => {
-        dispatch(editServices(item));
         history.push(`/services/${item.id}`);
     };
 

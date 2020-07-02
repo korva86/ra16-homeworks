@@ -85,10 +85,10 @@ export const fetchServices = () => async (dispatch) => {
     }
 };
 
-export const editServices = (item) => async (dispatch) => {
+export const editServices = (item, signal) => async (dispatch) => {
     dispatch(editServicesRequest());
     try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/${item.id}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/${item.id}`, {signal});
         if (!response.ok) {
             throw new Error(response.statusText);
         }

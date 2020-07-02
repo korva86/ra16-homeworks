@@ -1,12 +1,22 @@
-import React, {useRef} from 'react'
-import {useHistory} from 'react-router-dom';
+import React, {useRef, useEffect} from 'react'
+import {useHistory, useParams} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import {changeServiceField, saveService} from "../actions/actionCreators";
+import {changeServiceField, editServices, saveService} from "../actions/actionCreators";
 
 function ServiceEdit() {
     const {item, loading, error, saveLoading} = useSelector(state => state.serviceAdd);
     const dispatch = useDispatch();
     const history = useHistory();
+    const { id } = useParams();
+
+    useEffect(() => {
+        let controller = new AbortController();
+        dispatch(editServices({id}, controller.signal));
+
+        return () => {
+            controller.abort();
+        };
+    }, [id]);
 
     const handleChange = useRef(evt => {
         const {name, value} = evt.target;
